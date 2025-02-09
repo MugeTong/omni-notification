@@ -1,0 +1,22 @@
+{
+    "name": "omni-notification",
+    "version": "0.0.0",
+    "description": "A simple web notification system for Vue 3",
+    "author": "MugeTong",
+    "license": "MIT",
+    "keywords": [
+        "web",
+        "vue",
+        "vue3",
+        "notification"
+    ],
+    "main": "index.ts",
+    "type": "module",
+    "scripts": {
+      "build": "rollup -c --environment NODE_ENV:production"
+    },
+    "peerDependencies": {
+      "vue": "^3.5.13"
+    },
+    "devDependencies": {}
+}
