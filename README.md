@@ -34,6 +34,6 @@ notify('Hello World!');
 
 ```html
 <template>
-  <button @click="$notify("Hello World!")">Notify</button>
+  <button @click="$notify(`Hello World!`)">Notify</button>
 </template>
 ```
