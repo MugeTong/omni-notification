@@ -1,12 +1,12 @@
 {
-    "include": [
-        "src/**/*"
-    ],
-    "exclude": ["dist", "node_modules", "test"],
-    "compilerOptions": {
-        "target": "ESNext",  /* Specify ECMAScript target version */
-        "module": "ESNext",  /* Specify module code generation */
-        "declaration": true,  /* Generates corresponding '.d.ts' file */
-        "moduleResolution": "node",  /* Node.js style module resolution */
-    }
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": ["dist", "node_modules", "test"],
+  "compilerOptions": {
+    "target": "ESNext", /* Specify ECMAScript target version */
+    "module": "ESNext", /* Specify module code generation */
+    "declaration": true, /* Generates corresponding '.d.ts' file */
+    "moduleResolution": "node" /* Node.js style module resolution */
+  }
 }

@@ -5,16 +5,16 @@ import vue from 'rollup-plugin-vue';
 import terser from '@rollup/plugin-terser';
 
 export default {
-    input: 'src/index.ts',
-    output: {
-        file: 'dist/index.js',
-        format: 'module'
-    },
-    plugins: [
-        resolve(),
-        commonjs(),
-        typescript(),
-        vue(),
-        terser()
-    ]
+  input: 'src/index.ts',
+  output: {
+    file: 'dist/index.js',
+    format: 'module',
+  },
+  plugins: [
+    resolve(),
+    commonjs(),
+    typescript(),
+    vue(),
+    terser(),
+  ],
 };
