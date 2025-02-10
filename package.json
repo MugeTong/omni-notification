@@ -1,6 +1,6 @@
 {
   "name": "omni-notification",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A simple web notification system for Vue 3",
   "author": "MugeTong",
   "license": "MIT",
@@ -10,10 +10,18 @@
     "vue3",
     "notification"
   ],
-  "main": "index.ts",
   "type": "module",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
-    "build": "rollup -c --environment NODE_ENV:production"
+    "build": "rollup -c --environment NODE_ENV:production",
+    "pack": "npm run build && npm pack"
   },
   "peerDependencies": {
     "vue": "^3.5.13"
