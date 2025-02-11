@@ -20,6 +20,7 @@
     "README.md"
   ],
   "scripts": {
+    "dev": "vite",
     "build": "rollup -c --environment NODE_ENV:production",
     "pack": "npm run build && npm pack"
   },
@@ -33,6 +34,9 @@
     "rollup": "^4.34.6",
     "rollup-plugin-typescript2": "^0.36.0",
     "rollup-plugin-vue": "^6.0.0",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.11",
+    "vite-plugin-vue-devtools": "^7.7.1",
     "vue": "^3.5.13"
   }
 }

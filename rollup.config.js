@@ -1,3 +1,4 @@
+// this file is used to build the library with Rollup.
 import vue from 'rollup-plugin-vue';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
