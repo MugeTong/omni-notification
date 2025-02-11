@@ -1,7 +1,7 @@
+import vue from 'rollup-plugin-vue';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
-import vue from 'rollup-plugin-vue';
 import terser from '@rollup/plugin-terser';
 
 export default {
@@ -11,10 +11,10 @@ export default {
     format: 'module',
   },
   plugins: [
+    vue(),
     resolve(),
     commonjs(),
     typescript(),
-    vue(),
     terser(),
   ],
 };
