@@ -1,6 +1,6 @@
 {
   "name": "omni-notification",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A simple web notification system for Vue 3",
   "author": "MugeTong",
   "license": "MIT",
