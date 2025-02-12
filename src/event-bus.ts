@@ -1,15 +1,18 @@
 // event-bus.js
+import {NotifyItem} from './types';
+
+type Callback<T = string | number | NotifyItem> = (param?: T) => void;
+
+type EventBus = {
+  on(event: string, callback: Callback): void;
+  off(event: string, callback: Callback): void;
+  emit(event: string, param?: string | number | NotifyItem): void;
+};
 
 // Not necessary to use `ref` to create listeners
 const eventMap: Map<string, Set<Callback>> = new Map();
 
-type Callback<Params = any[]> = Params extends unknown[] ? (...args: Params) => any : (args: Params) => any;
-
-export const eventBus: {
-  on(event: string, callback: Callback): void;
-  off(event: string, callback: Callback): void;
-  emit(event: string, ...args: any[]): void;
-} = {
+export const eventBus: EventBus = {
   // add listener
   on(event: string, callback: Callback): void {
     // set up a new event listener if it doesn't exist
@@ -31,11 +34,11 @@ export const eventBus: {
     }
   },
   // emit event
-  emit(event: string, ...args: any[]): void {
+  emit(event: string, param?: string | number | NotifyItem): void {
     if (eventMap.has(event)) {
       const eventListeners: Set<Callback> = eventMap.get(event);
       for (const callback of eventListeners) {
-        callback(...args);
+        callback(param);
       }
     }
   },

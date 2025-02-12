@@ -1,66 +1,47 @@
 import {App, createApp} from 'vue';
 import {eventBus} from './event-bus';
 import Notifications from './components/Notifications.vue';
+import type {NotifyObject, NotifyItem, NotificationPlugin, PluginOptions} from './types';
 
-interface Notification {
-  install: (app: App, args: PluginOptions) => void;
-  readonly installed?: boolean;
-  readonly params?: any;
-}
+const defaultOptions: PluginOptions = {
+  name: 'notify',
+  customComponent: false,
+  componentName: 'Notifications',
+};
 
-interface PluginOptions {
-  name?: string;
-  componentName?: string;
-}
-
-interface NotifyObject {
-  (params:string | NotifyOptions): void;
-
-  show: (params: string | NotifyOptions) => void;
-  close: (id: string) => void;
-  clearGroup: (groupName: string) => void;
-  clearAll: () => void;
-}
-
-interface NotifyOptions {
-  title?: string;
-  text: string;
-  type?: 'success' | 'error' | 'warning' | 'info';
-  duration?: number;
-  group?: string;
-  id?: string;
-  data?: any;
-}
-
-const OmniNotification: Notification = {
+const OmniNotification: NotificationPlugin = {
   installed: false,
-  install: function(app: App, args: PluginOptions = {}): void {
+  params: null,
+  install: function(app: App, args: PluginOptions = defaultOptions): void {
     // ensure the plugin is installed only once
     if (this.installed) return;
     this.installed = true;
-
     // check the plugin options
-    args.name = args.name || 'notify';
-    args.componentName = args.componentName || 'Notifications';
+    if (Object.keys(args).length === 0) args = {name: 'notify'};
+    // store the plugin options
+    this.params = args;
+
 
     // an object to store our notifications
-    const notify: NotifyObject = (params: string | NotifyOptions): void => {
+    const notify: NotifyObject = (params: string | NotifyItem): void => {
       notify.show(params);
     };
 
-    notify.show = (params: string | NotifyOptions): void =>{
+    notify.show = (params: string | NotifyItem): void => {
       // simple string as a message
       if (typeof params === 'string') {
         params = {title: '', text: params};
       }
       // if the message is an object, we assume it's a notification
+      console.log('add', params);
+      eventBus.emit('add', params);
     };
 
-    notify.close = function(id) {
+    notify.close = function(id: number): void {
       eventBus.emit('close', id);
     };
 
-    notify.clearGroup = function(groupName) {
+    notify.clearGroup = function(groupName: string): void {
       eventBus.emit('clearGroup', groupName);
     };
 
@@ -70,11 +51,16 @@ const OmniNotification: Notification = {
 
 
     // register the component to the HTML body
-    const mountPoint = document.createElement('div');
-    mountPoint.id = 'omni-notification';
-    document.body.appendChild(mountPoint);
-    const instance = createApp(Notifications);
-    instance.mount(mountPoint);
+    if (!args.customComponent) {
+      const mountPoint: HTMLDivElement = document.createElement('div');
+      mountPoint.id = 'omni-notification';
+      document.body.appendChild(mountPoint);
+      const instance: App<Element> = createApp(Notifications);
+      instance.mount(mountPoint);
+    } else {
+      // register the custom component for use
+      app.component(args.componentName, Notifications);
+    }
 
     // use it in `<template>` as {{ $notify }}
     app.config.globalProperties['$' + args.name] = notify;

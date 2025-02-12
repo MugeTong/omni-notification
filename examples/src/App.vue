@@ -1,9 +1,8 @@
 <script setup>
-import { inject } from 'vue';
+import {inject} from 'vue';
 import TitleBar from './componets/TitleBar.vue';
 
 const notify = inject('notify');
-console.log(notify);
 
 </script>
 
@@ -41,16 +40,20 @@ console.log(notify);
     font-size: 16px;
     cursor: pointer;
     box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
-  } 
+  }
+
   .info {
     background-color: var(--color-info);
   }
+
   .success {
     background-color: var(--color-success);
   }
+
   .warning {
     background-color: var(--color-warning);
   }
+
   .error {
     background-color: var(--color-error);
   }
