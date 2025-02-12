@@ -5,8 +5,8 @@ type NotificationType = 'info' | 'success' | 'warning' | 'error';
 
 export type NotificationPlugin = {
   install: (app: App, args: PluginOptions) => void;
-  readonly installed: boolean;
-  readonly params: any;
+  installed: boolean;
+  params: any;
 };
 
 /**
@@ -14,7 +14,7 @@ export type NotificationPlugin = {
  */
 export interface PluginOptions {
   /**
-   * register the plugin as `name` in `provide/inject` and `$name` in `template`. Default is `notify`.
+   * Register the plugin as `name` in `provide/inject` and `$name` in `template`. Default is `notify`.
    */
   name?: string;
   /**

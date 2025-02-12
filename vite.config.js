@@ -19,4 +19,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./examples/src', import.meta.url))
     },
   },
+  test: {
+    testMatch: ['**/*.test.js'],
+  },
 })

@@ -1,5 +1,5 @@
 // event-bus.js
-import {NotifyItem} from './types';
+import { NotifyItem } from './types';
 
 type Callback<T = string | number | NotifyItem> = (param?: T) => void;
 
@@ -10,33 +10,33 @@ type EventBus = {
 };
 
 // Not necessary to use `ref` to create listeners
-const eventMap: Map<string, Set<Callback>> = new Map();
+const eventMap = new Map<string, Set<Callback>>();
 
 export const eventBus: EventBus = {
-  // add listener
+  // Add listener
   on(event: string, callback: Callback): void {
-    // set up a new event listener if it doesn't exist
+    // Set up a new event listener if it doesn't exist
     if (!eventMap.has(event)) {
       eventMap.set(event, new Set());
     }
-    // get the event listener set and add the callback
-    const eventListeners: Set<Callback> = eventMap.get(event);
+    // Get the event listener set and add the callback
+    const eventListeners = eventMap.get(event) as Set<Callback>;
     eventListeners.add(callback);
   },
-  // remove listener
+  // Remove listener
   off(event: string, callback: Callback): void {
     if (eventMap.has(event)) {
-      const eventListeners: Set<Callback> = eventMap.get(event);
+      const eventListeners = eventMap.get(event) as Set<Callback>;
       eventListeners.delete(callback);
       if (eventListeners.size === 0) {
         eventMap.delete(event);
       }
     }
   },
-  // emit event
+  // Emit event
   emit(event: string, param?: string | number | NotifyItem): void {
     if (eventMap.has(event)) {
-      const eventListeners: Set<Callback> = eventMap.get(event);
+      const eventListeners = eventMap.get(event) as Set<Callback>;
       for (const callback of eventListeners) {
         callback(param);
       }

@@ -21,6 +21,7 @@
   ],
   "scripts": {
     "dev": "vite",
+    "test": "vitest",
     "build": "rollup -c --environment NODE_ENV:production",
     "pack": "npm run build && npm pack"
   },
@@ -38,6 +39,7 @@
     "rollup-plugin-vue": "^6.0.0",
     "vite": "^6.0.11",
     "vite-plugin-vue-devtools": "^7.7.1",
+    "vitest": "^3.0.5",
     "vue": "^3.5.13"
   }
 }

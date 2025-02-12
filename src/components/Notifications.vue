@@ -1,10 +1,10 @@
 <script setup lang="ts">
-console.log('Notifications component');
+
 
 </script>
 
 <template>
-  <div class="container">
+  <div class="omni-notification-group">
     <h1>Notifications</h1>
   </div>
 </template>

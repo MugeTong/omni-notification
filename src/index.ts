@@ -12,28 +12,27 @@ const defaultOptions: PluginOptions = {
 const OmniNotification: NotificationPlugin = {
   installed: false,
   params: null,
-  install: function(app: App, args: PluginOptions = defaultOptions): void {
-    // ensure the plugin is installed only once
+  install: function(app: App, args?: PluginOptions): void {
+    // Ensure the plugin is installed only once
     if (this.installed) return;
     this.installed = true;
-    // check the plugin options
-    if (Object.keys(args).length === 0) args = {name: 'notify'};
-    // store the plugin options
+    // Check the plugin options. If not provided, use the default options
+    args = {...defaultOptions, ...args};
+    // Store the plugin options
     this.params = args;
 
-
-    // an object to store our notifications
+    // An object to store our notifications
     const notify: NotifyObject = (params: string | NotifyItem): void => {
       notify.show(params);
     };
 
     notify.show = (params: string | NotifyItem): void => {
-      // simple string as a message
+      // Simple string as a message
       if (typeof params === 'string') {
         params = {title: '', text: params};
       }
-      // if the message is an object, we assume it's a notification
-      console.log('add', params);
+      // If the message is an object, we assume it's a notification
+      console.log(params);
       eventBus.emit('add', params);
     };
 
@@ -50,23 +49,23 @@ const OmniNotification: NotificationPlugin = {
     };
 
 
-    // register the component to the HTML body
-    if (!args.customComponent) {
-      const mountPoint: HTMLDivElement = document.createElement('div');
+    // Register the component to the HTML body
+    if (!args.customComponent as boolean) {
+      const mountPoint = document.createElement('div');
       mountPoint.id = 'omni-notification';
       document.body.appendChild(mountPoint);
-      const instance: App<Element> = createApp(Notifications);
+      const instance = createApp(Notifications);
       instance.mount(mountPoint);
     } else {
-      // register the custom component for use
-      app.component(args.componentName, Notifications);
+      // Register the custom component for use
+      app.component(args.componentName as string, Notifications);
     }
 
-    // use it in `<template>` as {{ $notify }}
+    // Use it in `<template>` as {{ $notify }}
     app.config.globalProperties['$' + args.name] = notify;
 
-    // use it in `<script setup>` as `const notify = inject('notify')`
-    app.provide(args.name, notify);
+    // Use it in `<script setup>` as `const notify = inject('notify')`
+    app.provide(args.name as string, notify);
   },
 };
 
