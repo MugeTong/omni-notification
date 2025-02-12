@@ -6,7 +6,7 @@ type NotificationType = 'info' | 'success' | 'warning' | 'error';
 export type NotificationPlugin = {
   install: (app: App, args: PluginOptions) => void;
   installed: boolean;
-  params: any;
+  params: PluginOptions | null;
 };
 
 /**
@@ -28,11 +28,25 @@ export interface PluginOptions {
 }
 
 export interface NotifyObject {
+  /**
+   * Show a notification
+   */
   (params: string | NotifyItem): void;
-
+  /**
+   * Show a info notification
+   */
   show: (params: string | NotifyItem) => void;
+  /**
+   * Close a notification by id
+   */
   close: (id: number) => void;
+  /**
+   * Close all notifications
+   */
   clearGroup: (groupName: string) => void;
+  /**
+   * Close all notifications
+   */
   clearAll: () => void;
 }
 
