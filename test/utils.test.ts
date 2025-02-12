@@ -3,30 +3,42 @@ import {parseNumericValue} from '../src/utils';
 
 describe('parseNumericValue', () => {
   it('should parse valid px string', () => {
-    expect(parseNumericValue('10px')).toEqual({type: 'px', value: 10});
-  });
-
-  it('should parse valid percentage string', () => {
-    expect(parseNumericValue('50%')).toEqual({type: '%', value: 50});
-  });
-
-  it('should throw error for invalid string', () => {
-    expect(() => parseNumericValue('abc')).toThrow('Expected a valid number/string(px,%,auto), got "abc"');
-  });
-
-  it('should parse "auto" string', () => {
-    expect(parseNumericValue('auto')).toEqual({type: 'auto', value: 0});
-  });
-
-  it('should parse number input', () => {
-    expect(parseNumericValue(20)).toEqual({type: 'px', value: 20});
+    const result = parseNumericValue('10px');
+    expect(result).toEqual({type: 'px', value: 10});
   });
 
   it('should parse decimal px string', () => {
-    expect(parseNumericValue('10.5px')).toEqual({type: 'px', value: 10.5});
+    const result = parseNumericValue('-10.5px');
+    expect(result).toEqual({type: 'px', value: -10.5});
+  });
+
+  it('should parse valid percentage string', () => {
+    const result = parseNumericValue('50%');
+    expect(result).toEqual({type: '%', value: 50});
   });
 
   it('should parse decimal percentage string', () => {
-    expect(parseNumericValue('50.5%')).toEqual({type: '%', value: 50.5});
+    const result = parseNumericValue('-50.5%');
+    expect(result).toEqual({type: '%', value: -50.5});
+  });
+
+  it('should parse "auto" string', () => {
+    const result = parseNumericValue('auto');
+    expect(result).toEqual({type: 'auto', value: 0});
+  });
+
+  it('should throw error for invalid string "5apx%"', () => {
+    expect(() => parseNumericValue('5apx%'))
+        .toThrow('Expected a valid number/string(px,%,auto), got "5apx%"');
+  });
+
+  it('should parse number input', () => {
+    const result = parseNumericValue(20);
+    expect(result).toEqual({type: 'px', value: 20});
+  });
+
+  it('should parse negative number input', () => {
+    const result = parseNumericValue(-20.5);
+    expect(result).toEqual({type: 'px', value: -20.5});
   });
 });

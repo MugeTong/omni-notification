@@ -18,7 +18,7 @@ export function parseNumericValue(position: number | string): NumericValue {
   let type: NumericType = 'auto';
   let value: number = 0;
   if (typeof position === 'string') {
-    const match = position.match(/^(\d+(\.\d+)?)(px|%)$/);
+    const match = position.match(/^(-?\d+(\.\d+)?)(px|%)$/);
     if (match) {
       value = parseFloat(match[0]);
       type = match[3] as NumericType;
