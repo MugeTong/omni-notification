@@ -2,17 +2,18 @@ import {App} from 'vue';
 
 
 type NotificationType = 'info' | 'success' | 'warning' | 'error';
+type AnimationType = 'fade';
 
-export type NotificationPlugin = {
-  install: (app: App, args: PluginOptions) => void;
+export interface NotificationPlugin {
+  install: (app: App, args?: PluginOptions, componentProps?: ComponentProps) => void;
   installed: boolean;
   params: PluginOptions | null;
-};
+}
 
 /**
  * Plugin options
  */
-export interface PluginOptions {
+export interface PluginOptions extends Record<string, unknown> {
   /**
    * Register the plugin as `name` in `provide/inject` and `$name` in `template`. Default is `notify`.
    */
@@ -21,6 +22,10 @@ export interface PluginOptions {
    * Custom your own notification component, if `true`. Default is `false`.
    */
   customComponent?: boolean;
+  /**
+   * Allow multiple components to be registered. Default is `false`.
+   */
+  multipleComponents?: boolean;
   /**
    * The name of the custom component. Default is `Notifications`.
    */
@@ -32,8 +37,9 @@ export interface NotifyObject {
    * Show a notification
    */
   (params: string | NotifyItem): void;
+
   /**
-   * Show a info notification
+   * Show an info notification
    */
   show: (params: string | NotifyItem) => void;
   /**
@@ -50,11 +56,15 @@ export interface NotifyObject {
   clearAll: () => void;
 }
 
-export interface NotifyItem {
+export interface NotifyItem extends Record<string, unknown> {
   title?: string;
-  text: string;
+  message: string;
   type?: NotificationType;
   duration?: number;
   group?: string;
   data?: any;
+}
+
+export interface ComponentProps extends Record<string, unknown> {
+  animationName: AnimationType;
 }
