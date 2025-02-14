@@ -1,23 +1,21 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { eventBus } from '../event-bus';
-import { NotifyItem } from '../types';
+import {onMounted} from 'vue';
+import {eventBus} from '../event-bus';
+import {NotifyItem} from '../types';
 
 const itemList: NotifyItem[] = [];
 
 
 const props = defineProps({
-  animationName: { type: String, default: 'fade' },
+  animationName: {type: String, default: 'fade'},
 });
 
 
-
-
-function addItem(item?: NotifyItem) {
+function addItem(item: NotifyItem) {
   console.log('add item', item);
 }
 
-function closeItem(id?: number) {
+function closeItem(id: number) {
   console.log('close item', id);
 }
 

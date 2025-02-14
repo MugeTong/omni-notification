@@ -19,13 +19,13 @@ const defaultOptions: PluginOptions = {
 const OmniNotification: NotificationPlugin = {
   installed: false,
   params: null,
-  install: function(app: App, args?: PluginOptions, componentProps?: ComponentProps): void {
+  install: function(app: App, options?: PluginOptions, componentProps?: ComponentProps): void {
     // Ensure the plugin is installed only once
     if (this.installed) return;
     this.installed = true;
     // Check the plugin options. If not provided, use the default options
-    console.log(`initial args: ${args}`);
-    args = {...defaultOptions, ...args};
+    console.log(`initial args: ${options}`);
+    const args: PluginOptions = {...defaultOptions, ...options};
     console.log(args);
     // Store the plugin options
     this.params = args;
@@ -42,8 +42,8 @@ const OmniNotification: NotificationPlugin = {
         params = {title: '', message: params};
       }
       // If the message is an object, we assume it's a notification
-      console.log(params);
-      eventBus.emit('add', params);
+      const item = params as NotifyItem;
+      eventBus.emit('add', item);
     };
 
     notify.close = function(id: number): void {
