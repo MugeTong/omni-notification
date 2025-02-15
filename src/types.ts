@@ -2,7 +2,7 @@ import {App} from 'vue';
 import {Timer} from './utils/timer';
 
 
-type NotificationType = 'info' | 'success' | 'warning' | 'error';
+export type NotificationType = 'info' | 'success' | 'warning' | 'error';
 type AnimationType = 'fade';
 
 export interface NotificationPlugin<K = PluginOptions, V = ComponentProps> {
@@ -40,12 +40,12 @@ export interface NotifyObject {
   /**
    * Show a notification
    */
-  (params: string | NotifyItem): void;
+  (param: NotifyItem | string, type?: NotificationType): void;
 
   /**
    * Show an info notification
    */
-  show: (params: string | NotifyItem) => void;
+  show: (param: NotifyItem | string, type?: NotificationType) => void;
   /**
    * Close a notification by id
    */

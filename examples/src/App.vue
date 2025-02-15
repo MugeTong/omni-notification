@@ -10,9 +10,9 @@ const notify = inject('notify');
   <title-bar/>
   <div class="playground">
     <div class="actions">
-      <button type="submit" class="info" @click="$notify({message: 'invoke info', type: 'info'})">Info</button>
-      <button type="submit" class="success" @click="$notify({message: 'invoke success', type: 'success'})">Success</button>
-      <button type="submit" class="warning" @click="$notify({message: 'invoke warning', type: 'warning'})">Warning</button>
+      <button type="submit" class="info" @click="$notify('invoke info')">Info</button>
+      <button type="submit" class="success" @click="$notify('invoke success','success')">Success</button>
+      <button type="submit" class="warning" @click="$notify('invoke warning', 'warning')">Warning</button>
       <button type="submit" class="error" @click="$notify({message: 'invoke error', type: 'error'})">Error</button>
     </div>
     <div class="options">

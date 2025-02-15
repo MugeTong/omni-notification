@@ -2,11 +2,12 @@ import {App, createApp} from 'vue';
 import {eventBus} from './utils/event-bus';
 import Notifications from './components/Notifications.vue';
 import type {
-  NotifyObject,
-  NotifyItem,
-  NotificationPlugin,
-  PluginOptions,
   ComponentProps,
+  NotificationPlugin,
+  NotificationType,
+  NotifyItem,
+  NotifyObject,
+  PluginOptions,
 } from './types';
 
 const defaultOptions: PluginOptions = {
@@ -30,17 +31,17 @@ const OmniNotification: NotificationPlugin<PluginOptions, ComponentProps> = {
 
 
     // An object to store our notifications
-    const notify: NotifyObject = (params: string | NotifyItem): void => {
-      notify.show(params);
+    const notify: NotifyObject = (param: NotifyItem | string, type?: NotificationType): void => {
+      notify.show(param, type);
     };
 
-    notify.show = (params: string | NotifyItem): void => {
+    notify.show = (param: NotifyItem | string, type?: NotificationType): void => {
       // Simple string as a message
-      if (typeof params === 'string') {
-        params = {message: params};
+      if (typeof param === 'string') {
+        param = {message: param, type};
       }
       // If the message is an object, we assume it's a notification
-      const item = params as NotifyItem;
+      const item = param as NotifyItem;
       eventBus.emit('add', item);
     };
 
