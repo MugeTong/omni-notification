@@ -1,5 +1,5 @@
 import {App, createApp} from 'vue';
-import {eventBus} from './event-bus';
+import {eventBus} from './utils/event-bus';
 import Notifications from './components/Notifications.vue';
 import type {
   NotifyObject,
@@ -16,17 +16,15 @@ const defaultOptions: PluginOptions = {
   componentName: 'Notifications',
 };
 
-const OmniNotification: NotificationPlugin = {
+const OmniNotification: NotificationPlugin<PluginOptions, ComponentProps> = {
   installed: false,
-  params: null,
+  params: undefined,
   install: function(app: App, options?: PluginOptions, componentProps?: ComponentProps): void {
     // Ensure the plugin is installed only once
     if (this.installed) return;
     this.installed = true;
     // Check the plugin options. If not provided, use the default options
-    console.log(`initial args: ${options}`);
     const args: PluginOptions = {...defaultOptions, ...options};
-    console.log(args);
     // Store the plugin options
     this.params = args;
 
@@ -39,7 +37,7 @@ const OmniNotification: NotificationPlugin = {
     notify.show = (params: string | NotifyItem): void => {
       // Simple string as a message
       if (typeof params === 'string') {
-        params = {title: '', message: params};
+        params = {message: params};
       }
       // If the message is an object, we assume it's a notification
       const item = params as NotifyItem;
@@ -62,7 +60,7 @@ const OmniNotification: NotificationPlugin = {
     // Register the component to the HTML body
     if (!args.customComponent as boolean && !args.multipleComponents as boolean) {
       const mountPoint = document.createElement('div');
-      mountPoint.id = 'omni-notification';
+      mountPoint.id = 'omni-notification-container';
       document.body.appendChild(mountPoint);
       const instance = createApp(Notifications, componentProps);
       instance.mount(mountPoint);

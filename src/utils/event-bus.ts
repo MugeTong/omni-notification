@@ -1,5 +1,5 @@
 // event-bus.js
-import {NotifyItem} from './types';
+import {NotifyItem} from '../types';
 
 type Callback<T extends string | number | NotifyItem> = (...args: T[]) => void;
 

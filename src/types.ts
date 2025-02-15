@@ -1,13 +1,14 @@
 import {App} from 'vue';
+import {Timer} from './utils/timer';
 
 
 type NotificationType = 'info' | 'success' | 'warning' | 'error';
 type AnimationType = 'fade';
 
-export interface NotificationPlugin {
-  install: (app: App, args?: PluginOptions, componentProps?: ComponentProps) => void;
+export interface NotificationPlugin<K = PluginOptions, V = ComponentProps> {
+  install: (app: App, args?: K, componentProps?: V) => void;
   installed: boolean;
-  params: PluginOptions | null;
+  params: K | undefined;
 }
 
 /**
@@ -32,6 +33,9 @@ export interface PluginOptions extends Record<string, unknown> {
   componentName?: string;
 }
 
+/**
+ * Notification object used to manage notifications
+ */
 export interface NotifyObject {
   /**
    * Show a notification
@@ -57,14 +61,54 @@ export interface NotifyObject {
 }
 
 export interface NotifyItem extends Record<string, unknown> {
+  /**
+   * Notification id, incrementing number
+   */
+  id?: number;
+  /**
+   * Notification title, default is `""`.
+   */
   title?: string;
+  /**
+   * Notification message
+   */
   message: string;
+  /**
+   * Notification type. Default is `info`.
+   */
   type?: NotificationType;
+  /**
+   * Group name for the notification. Default is `"default"`.
+   */
+  groupName?: string;
+  /**
+   * Duration in milliseconds for entering and leaving animations. Default is `300`.
+   */
+  speed?: number;
+  /**
+   * Duration in milliseconds. Default is `5000`.
+   */
   duration?: number;
-  group?: string;
-  data?: any;
+  /**
+   * Additional data to pass to the notification component
+   */
+  data?: any;  // TODO: any
+  /**
+   * item state, scheduled by lifecycle hooks and click events
+   */
+  isActive?: boolean;
+  /**
+   * variable to store the timer for the notification
+   */
+  timer?: Timer;
 }
 
+/**
+ * Notification component properties
+ */
 export interface ComponentProps extends Record<string, unknown> {
   animationName: AnimationType;
+  groupName: string;
+  ignoreDuplicates: boolean;
+  pauseOnHover: boolean;
 }

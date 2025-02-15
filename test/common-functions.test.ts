@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest';
-import {parseNumericValue} from '../src/utils';
+import {parseNumericValue} from '../src/utils/common-functions';
 
 describe('parseNumericValue', () => {
   it('should parse valid px string', () => {
