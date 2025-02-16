@@ -112,7 +112,9 @@ export interface ComponentProps extends Record<string, unknown> {
    */
   animationName: AnimationType;
   /**
-   * Notification group name. Default is `default`. When multiple components are used, this is recommendly set.
+   * Notification group name.
+   * Default is `default`.
+   * When multiple components are used, this is recommended to be set.
    */
   groupName: string;
   /**
