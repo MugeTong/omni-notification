@@ -13,7 +13,9 @@ const notify = inject('notify');
       <button type="submit" class="info" @click="$notify('invoke info')">Info</button>
       <button type="submit" class="success" @click="$notify('invoke success','success')">Success</button>
       <button type="submit" class="warning" @click="$notify('invoke warning', 'warning')">Warning</button>
-      <button type="submit" class="error" @click="$notify({message: 'invoke error', type: 'error'})">Error</button>
+      <button type="submit" class="error"
+              @click="$notify({message: '请检查网络设置', type: 'error', title: '连接超时'})">Error
+      </button>
     </div>
     <div class="options">
 

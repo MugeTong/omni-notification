@@ -11,11 +11,15 @@
 h1 {
   color: var(--color-text-title);
   font-size: 48px;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .description {
   color: var(--color-text-subtitle);
   font-size: 16px;
   margin-bottom: 20px;
+  -webkit-user-select: none;
+  user-select: none;
 }
 </style>

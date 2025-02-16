@@ -17,7 +17,8 @@ const props = defineProps({
   pauseOnHover: {type: Boolean, default: true},
   maxItems: {type: Number, default: Infinity},
   reverseOrder: {type: Boolean, default: true},
-  position: {type: String, default: 'top-right'},
+  position: {type: String, default: 'top-left'},
+  stackItems: {type: Boolean, default: false},
 });
 
 // computed properties
@@ -113,9 +114,13 @@ onMounted(() => {
            @mouseleave="() => {if (props.pauseOnHover) item.timer?.resume()}">
         <slot :item="item">
           <div class="omni-notification" :class="item.type">
-            <div class="omni-notification-title">{{ item.title }}</div>
-            <div class="omni-notification-message">{{ item.message }}</div>
-            <div class="omni-notification-data">{{ item.data }}</div>
+            <div class="omni-notification-body">
+              <div class="omni-notification-icon"></div>
+              <div class="omni-notification-title">{{ item.title }}</div>
+              <div class="omni-notification-message">{{ item.message }}</div>
+              <div class="omni-notification-data">{{ item.data }}</div>
+            </div>
+            <button class="omni-notification-close" type="submit" title="close" @click="destroyItem(item)"> ×</button>
           </div>
         </slot>
       </div>
@@ -124,59 +129,95 @@ onMounted(() => {
 </template>
 
 <style scoped>
-:root {
-  --color-info: #2b6cb0;
-  --color-success: #2f855a;
-  --color-warning: #d97706;
-  --color-error: #c53030;
-
-  --color-text: #333333;
-  --color-text-title: #333333;
-  --color-text-subtitle: #666666;
-}
-
 .omni-notification-group {
   position: absolute;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding: 20px;
+  --on-color-info: #2b6cb0;
+  --on-color-success: #2f855a;
+  --on-color-warning: #d97706;
+  --on-color-error: #c53030;
+  --on-color-text: #ffffff;
+  --on-color-text-title: #ffffff;
 }
 
 .omni-notification-wrapper {
-  margin-top: 10px;
-  width: 300px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 5px 10px;
 }
 
 .omni-notification {
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 10px 10px 10px 20px;
+  width: 200px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 7px 5px 4px -5px rgba(0, 0, 0, 0.061),
+  9px 6px 5px -5px rgba(0, 0, 0, 0.089),
+  10px 7px 7px -5px rgba(0, 0, 0, 0.124),
+  17px 12px 11px -5px rgba(0, 0, 0, 0.2);
+}
+
+.omni-notification-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  .omni-notification-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--on-color-text-title);
+  }
+
+  .omni-notification-message {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--on-color-text);
+  }
 }
 
 .info {
-  color: var(--color-text);
-  background-color: var(--color-info);
+  color: var(--on-color-text);
+  background-color: var(--on-color-info);
 }
 
 .success {
-  color: var(--color-text);
-  background-color: var(--color-success);
+  color: var(--on-color-text);
+  background-color: var(--on-color-success);
 }
 
 .warning {
-  color: var(--color-text);
-  background-color: var(--color-warning);
+  color: var(--on-color-text);
+  background-color: var(--on-color-warning);
 }
 
 .error {
-  color: var(--color-text);
-  background-color: var(--color-error);
+  color: var(--on-color-text);
+  background-color: var(--on-color-error);
 }
 
+.omni-notification-close {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 16px;
+  border: none;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 32px;
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.2s;
+}
+
+.omni-notification-close:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
 
 </style>

@@ -107,8 +107,36 @@ export interface NotifyItem extends Record<string, unknown> {
  * Notification component properties
  */
 export interface ComponentProps extends Record<string, unknown> {
+  /**
+   * Animation name for the notification. Default is `fade`.
+   */
   animationName: AnimationType;
+  /**
+   * Notification group name. Default is `default`. When multiple components are used, this is recommendly set.
+   */
   groupName: string;
+  /**
+   * ignore duplicate notifications. Default is `false`.
+   */
   ignoreDuplicates: boolean;
+  /**
+   * Pause the timer when the mouse is hovering over the notification. Default is `false`.
+   */
   pauseOnHover: boolean;
+  /**
+   * Maximum number of notifications to display. Default is `Infinity`.
+   */
+  maxItems: number;
+  /**
+   * Reverse the order of the notifications. Default is `false`.
+   */
+  reverseOrder: boolean;
+  /**
+   * Position of the notification. Default is `top-left`.
+   */
+  position: string;
+  /**
+   * show all the notifications in one place. Default is `false`.
+   */
+  stackItems: boolean;
 }
