@@ -50,7 +50,7 @@ function addItem(event: NotifyItem) {
 
   // create the item
   const item: NotifyItem = {id, title, message: event.message, type, groupName, speed, duration, data, isActive};
-  item.timer = new Timer(() => destroyItem(item), duration + speed * 2);
+  item.timer = new Timer(() => destroyItem(item), duration + speed);
 
   // add the item to the list
   const isReverseOrder = props.reverseOrder;
@@ -104,8 +104,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="omni-notification-group" :style="positionCss">
-    <transition-group :name="animationName">
+  <div class="container" :style="positionCss">
+    <transition-group :name="animationName" class="omni-notification-group" tag="div">
       <div v-for="item in activeList"
            :key="item.id"
            :data-id="item.id"
@@ -120,7 +120,7 @@ onMounted(() => {
               <div class="omni-notification-message">{{ item.message }}</div>
               <div class="omni-notification-data">{{ item.data }}</div>
             </div>
-            <button class="omni-notification-close" type="submit" title="close" @click="destroyItem(item)"> ×</button>
+            <button class="omni-notification-close" type="button" @click="destroyItem(item)">×</button>
           </div>
         </slot>
       </div>
@@ -129,7 +129,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.omni-notification-group {
+.container {
   position: absolute;
   z-index: 1;
   display: flex;
@@ -141,6 +141,10 @@ onMounted(() => {
   --on-color-error: #c53030;
   --on-color-text: #ffffff;
   --on-color-text-title: #ffffff;
+}
+
+.omni-notification-group {
+  position: relative;
 }
 
 .omni-notification-wrapper {
@@ -220,4 +224,22 @@ onMounted(() => {
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* The following are animation css styles*/
+.fade-move, 
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+/* 确保将离开的元素从布局流中删除
+  以便能够正确地计算移动的动画。 */
+.fade-leave-active {
+  position: absolute;
+}
 </style>
